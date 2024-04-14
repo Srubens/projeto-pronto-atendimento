@@ -1,3 +1,4 @@
+// CODIGO ATUAL
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment'
 @Component({
@@ -74,20 +75,18 @@ export class Tab1Page implements OnInit {
         // Reagendar a próxima chamada
         setTimeout(() => {
           processarAtendimentos(tipo, tempoEspera);
-        }, tempoEspera * 1000);
+        }, tempoEspera + 1000);
       }
     
       // Iniciar o processo de chamada
-      processarAtendimentos('PRIORITARIA', 25); // Prioritários primeiro, espera 25 segundos
+      processarAtendimentos('PRIORITARIA', 30000); // Prioritários primeiro, espera 25 segundos
       setTimeout(() => {
-        processarAtendimentos('GERAL', 35); // Gerais depois, espera 45 segundos
+        processarAtendimentos('GERAL', 20000); // Gerais depois, espera 45 segundos
         setTimeout(() => {
-          processarAtendimentos('EXAMES', 35); // Exames por último, espera 35 segundos
-        }, 4000);
-      }, 500);
+          processarAtendimentos('EXAMES', 20000); // Exames por último, espera 35 segundos
+        }, 20000);
+      }, 15000);
     }
-    
-    
     
 
     recuperaDado():any{

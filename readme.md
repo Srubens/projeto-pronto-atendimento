@@ -3,8 +3,7 @@
 O **Projeto Pronto Atendimento** visa facilitar o gerenciamento de pacientes em um ambiente de atendimento. Abaixo estão os principais pontos do projeto:
 
 1. **Cadastro de Pacientes:**
-    - Os pacientes podem ser cadastrados com informações relevantes, como nome, idade e motivo da consulta.
-    - Essas informações são armazenadas para posterior atendimento.
+    - Os pacientes podem ser cadastrados com informações relevantes, como nome, data do cadastro, data do atendimento.
 
 2. **Solicitação de Senhas:**
     - Após o cadastro, o paciente recebe uma senha que indica sua ordem de atendimento.

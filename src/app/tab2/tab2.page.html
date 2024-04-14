@@ -17,20 +17,25 @@
 
   <ion-grid>
     <ion-row>
-      <ion-input [(ngModel)]="nomePaciente" class="name_paciente" label="Digite o nome do paciente" label-placement="floating" fill="outline" placeholder="Ex: Maria da Silva"></ion-input>
+      <ion-input [(ngModel)]="nomePaciente" 
+      (input)="campoPreenchido()"
+      class="name_paciente" 
+      label="Digite o nome do paciente" 
+      label-placement="floating" 
+      fill="outline" placeholder="Ex: Maria da Silva"></ion-input>
     </ion-row>
   </ion-grid>
 
   <ion-grid>
     <ion-row>
       <ion-col size-md="12" >
-        <ion-button (click)="myClickBotao1()" color="primary">SENHA PRIORITARIA</ion-button>
+        <ion-button [disabled]="!btn" (click)="myClickBotao1()" color="primary">SENHA PRIORITARIA</ion-button>
       </ion-col>
       <ion-col size-md="12" >
-        <ion-button (click)="myClickBotao2()" color="secondary">SENHA GERAL</ion-button>
+        <ion-button [disabled]="!btn" (click)="myClickBotao2()" color="secondary">SENHA GERAL</ion-button>
       </ion-col>
       <ion-col size-md="12" >
-        <ion-button (click)="myClickBotao3()" color="light">SENHA PARA RETIRADA DE EXAMES</ion-button>
+        <ion-button [disabled]="!btn" (click)="myClickBotao3()" color="light">SENHA PARA RETIRADA DE EXAMES</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

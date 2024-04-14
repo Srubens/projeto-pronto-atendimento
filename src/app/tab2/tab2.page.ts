@@ -14,16 +14,18 @@ export class Tab2Page {
   myTimer = moment().locale('pt-br').format('DD/MM/YYYY h:mm a')
   dtAtendimento:any = 0
   qtdAtendimento = 0
+  btn = false
 
   constructor(
     private toastControl:ToastController
   ) {}
 
+  campoPreenchido(){
+    this.btn = this.nomePaciente.trim().length > 0 
+  }
+
   dataAtendimento(prefixoSenha:any,contagem:any,nmpaciente:any,mytimer:any,dtAtendimento:any,qtdAtendimento:any) {
-    if (this.nomePaciente == undefined || this.nomePaciente == null) {
-      this.clickToast('Erro! para continuar preencha este campo')
-      return;
-    }
+
     let db:any = localStorage.getItem(contagem)
     let count = parseInt(db) || 0;
     count++;
@@ -60,15 +62,21 @@ export class Tab2Page {
   }
 
   myClickBotao1() {
+    this.campoPreenchido()
     this.dataAtendimento('SP', 'PRIORITARIA', this.nomePaciente, this.myTimer, this.dtAtendimento, this.qtdAtendimento)
+    this.btn = false
   }
   
   myClickBotao2() {
+    this.campoPreenchido()
     this.dataAtendimento('SG', 'GERAL', this.nomePaciente, this.myTimer, this.dtAtendimento, this.qtdAtendimento)
+    this.btn = false
   }
   
   myClickBotao3() {
+    this.campoPreenchido()
     this.dataAtendimento('SE', 'EXAMES', this.nomePaciente, this.myTimer, this.dtAtendimento, this.qtdAtendimento)
+    this.btn = false
   }
   
 
