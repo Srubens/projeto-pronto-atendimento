@@ -13,5 +13,24 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 3 page"></app-explore-container>
+  
+  <ion-list  >
+    <ion-list-header>
+      <ion-label>Lista de Atendimentos</ion-label>
+    </ion-list-header>
+  </ion-list>
+  <ion-list *ngIf="atendimentos.length > 0; else semAtendimentos" >
+    <ion-item *ngFor="let ated of atendimentos" >
+      <ion-label  >
+      Senha: {{ ated.senha }} &#8201;<br> 
+      Data da solicitação {{ ated['data-emissao'] }} &#8201; <br>
+      Data do atendimento {{ ated['data-atendimento'] == 0 ? 'Atendimento não realizado' : ated['data-atendimento'] }} &#8201;<br> 
+      Nome do paciente: {{ ated['nome-paciente'] }}</ion-label>
+    </ion-item>
+  </ion-list>
+  <ng-template #semAtendimentos >
+      <p>Nenhum atendimento cadastrado</p>
+  </ng-template>
+  
+
 </ion-content>

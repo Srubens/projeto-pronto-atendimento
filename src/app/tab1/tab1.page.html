@@ -9,9 +9,20 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
+      <ion-title size="large">Tab 1
+        conteudo teste
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-button (click)="chamarAtendimento()" color="primary">Atendimento</ion-button>
+  <ion-list >
+    <ion-item *ngFor="let chmd of chamados" >
+      <ion-label  >
+      Senha: {{ chmd.senha }} &#8201;<br> 
+      Data da solicitação {{ chmd['data-emissao'] }} &#8201; <br>
+      Data do atendimento {{ chmd['data-atendimento'] }} &#8201;<br> 
+      Nome do paciente: {{ chmd['nome-paciente'] }}</ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

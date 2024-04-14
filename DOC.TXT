@@ -1,0 +1,107 @@
+SA - SERVIÇO DE ATENDIMENTO
+SP - SENHA PRIORITARIA - TEMPO MEDIO DE 5 MIN | COLOCAR EM 3
+SG - SENHA GERAL - TEMPO MEDIO DE 3 MIN | COLOCAR EM 2
+SE - SENHA PARA RETIRADA DE EXAMES - TEMPO MEDIO DE 57 SEGUNDOS
+
+ATENDIMENTO DAS 7:00 ÀS 17:00
+
+PRIORIDADE 
+SP - SE OU SG - SP
+
+CODIGO DA SENHA YYMMDD-PPSQ
+
+QUANTIDADE DAS SENHAS EMITIDAS 
+QUANTIDADES DE SENHAS ATENDIDAS
+QUANTIDADES DAS SENHAS EMITIDAS POR PRIORIDADE
+QUANTIDADES DAS SENHAS ATENDIDAS POR PRIORIDADE
+
+RELATORIO NUMERAÇÃO E TIPO DE SENHA, DATA DA EMISSAO, DATA
+DO ATENDIMENTO, GUICHE RESPONSABEL
+
+preciso de uma função que me retorne um objeto onde ele tera
+uma senha 
+data de emissao
+data do atendimento
+nome da pessoa do atendimento
+quantidade de atendimento
+
+caso não tenha sido atendido quantidade de atendimento = 0 em javascript
+
+preciso de uma função que pegue um objeto por vez em atendimentos
+verifique se ele é SP, SE ou SG caso seja SP tem prioridade,
+SE e SG tem o mesmo valor podem mandar um ou outro.
+A senha vai pegando de atendimentos do primeiro ao ultimo de todos SP, SE ou SG.
+SP ele tem duração de 3 minutos, SE tem 57 segundos e SG 2 minutos.
+Depois de SP, tem que vim um SE ou SG e depois disso, um novo SP.
+precisar retonar o numero da senha, nome do paciente e o tempo do atendimento decrescente
+
+tenho no localstorage array chamado atendimentos
+preciso de uma função onde ele verifique se tem objeto em atendimentos
+o objeto é este 
+let objAtendimento = {
+    'senha': "240412-SP1",
+    'data-emissao': mytimer,
+    'data-atendimento': dtAtendimento,
+    'qtd-atendimento': qtdAtendimento,
+    'nome-paciente': nmpaciente
+};
+o objAtendimento.senha é como identificador preciso que pegue por prioridade,
+verifique se ele é SP, SE ou SG caso seja SP tem prioridade,
+SE e SG tem o mesmo valor podem mandar um ou outro.
+Ex: primeiro veio "240412-SP1", depois vem "240412-SG1" e depois vem "240412-SE1", para 
+depois vim o "240412-SP2"
+o objAtendimento selecionado ele em qtdAtendimento ele recebe mais 1 e em dtAtendimento ele
+recebe a data que foi atendido.
+SP ele tem duração de 3 minutos, SE tem 57 segundos e SG 2 minutos.
+Depois de SP, tem que vim um SE ou SG e depois disso, um novo SP.
+preciso retonar do objAtendimento senha, nome do paciente
+gostaria de retornar o tempo da duração do atendimento em decrescente junto com senha e o nome do paciente
+
+chamarAtendimento() {
+      // Carregar os atendimentos do localStorage
+      const atendimentosPrioritarios = JSON.parse(this.atdPrioridade) || [];
+      const atendimentosGerais = JSON.parse(this.atdGeral) || [];
+      const atendimentosExames = JSON.parse(this.atdExames) || [];
+    
+      // Função para marcar o atendimento como chamado
+      function marcarComoChamado(atendimento:any) {
+        atendimento['qtd-atendimento'] = 1;
+        atendimento['data-atendimento'] = moment().locale('pt-br').format('DD/MM/YYYY h:mm a')
+      }
+    
+      // Função para processar os atendimentos
+      function processarAtendimentos(tipo:any, tempoEspera:any) {
+        const atendimentos = tipo === 'PRIORITARIA' ? atendimentosPrioritarios : tipo === 'GERAL' ? atendimentosGerais : atendimentosExames;
+
+        let dbChamados:any = localStorage.getItem('chamados')
+        let chamados = JSON.parse(dbChamados) || []
+    
+        if (atendimentos.length > 0) {
+          const atendimento = atendimentos.shift(); // Pega o primeiro atendimento da fila
+          marcarComoChamado(atendimento);
+
+          chamados.push(atendimento)
+          localStorage.setItem('chamados', JSON.stringify([...chamados]))          
+
+          console.log(`Atendimento ${tipo} chamado:`, atendimento);
+          console.log('chamados', chamados)
+    
+          // Reagendar a próxima chamada
+          setTimeout(() => {
+            processarAtendimentos(tipo, tempoEspera);
+          },  1000);//colocar tempo espera aqui tempoEspera*
+        } else {
+          console.log(`Não há mais atendimentos ${tipo}.`);
+        }
+      }
+      
+      // Iniciar o processo de chamada
+      processarAtendimentos('PRIORITARIA', 300); // Prioritários primeiro, espera 40 segundos
+      setTimeout(() =>{
+        processarAtendimentos('GERAL', 40); // Gerais depois, espera 30 segundos
+        setTimeout(()=>{
+          processarAtendimentos('EXAMES', 35); // Exames por último, espera 25 segundos
+        },4000)
+      },500)
+      
+    }
